@@ -1,0 +1,22 @@
+menu:
+  Home: /
+  Archives: /archives
+
+banner: "images/banner.jpg"
+subtitle: Personal notes and projects
+
+links:
+  github: https://github.com/gitfirehappy
+
+excerpt_link: Read More
+fancybox: true
+sidebar: right
+widgets:
+- archive
+- recent_posts
+
+archive_type: 'monthly'
+show_count: false
+recent_posts_limits: 5
+rss:
+favicon:
