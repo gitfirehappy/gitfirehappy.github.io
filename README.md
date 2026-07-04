@@ -36,6 +36,10 @@ Put post images in that folder and reference them from Markdown:
 ![image alt](image.png)
 ```
 
+## Style Assets
+
+The site background lives at `source/images/backgrounds/anime-night-city.png`. Replace that file to change the global background.
+
 ## Deploy
 
 The site deploys with GitHub Actions from `main` to GitHub Pages.
