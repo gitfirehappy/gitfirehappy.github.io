@@ -1,0 +1,35 @@
+<div class="content-wrapper">
+  <main id="main-content">
+    <article class="single-post">
+      <% if (post.cover) { %>
+        <img class="post-cover" src="<%- url_for(post.cover) %>" alt="<%= post.title %>" onerror="this.style.display='none'">
+      <% } %>
+      <h1 class="post-title"><%= post.title %></h1>
+      <div class="post-meta">
+        <i class="fa fa-calendar"></i> <%= date(post.date, 'YYYY-MM-DD') %>
+        <% if (post.categories && post.categories.length) { %>
+          &nbsp;|&nbsp; <i class="fa fa-folder"></i>
+          <% post.categories.each(function(cat){ %>
+            <a href="<%- url_for(cat.path) %>" style="color:inherit"><%= cat.name %></a>
+          <% }); %>
+        <% } %>
+      </div>
+      <div class="post-content">
+        <%- post.content %>
+      </div>
+      <% if (post.tags && post.tags.length) { %>
+      <div class="post-tags">
+        <% post.tags.each(function(tag){ %>
+          <a href="<%- url_for(tag.path) %>"><i class="fa fa-tag"></i> <%= tag.name %></a>
+        <% }); %>
+      </div>
+      <% } %>
+    </article>
+
+    <% if (post.comments && theme.disqus_shortname){ %>
+    <section id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></section>
+    <% } %>
+  </main>
+
+  <%- partial('_partial/sidebar') %>
+</div>

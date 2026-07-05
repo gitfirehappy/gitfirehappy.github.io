@@ -1,0 +1,30 @@
+<aside id="sidebar">
+  <div class="sidebar-card">
+    <h3>最新文章</h3>
+    <ul>
+      <% site.posts.sort('date', -1).limit(5).each(function(post){ %>
+        <li><a href="<%- url_for(post.path) %>"><%= post.title %></a><span class="post-date"><%= date(post.date, 'YYYY-MM-DD') %></span></li>
+      <% }); %>
+    </ul>
+  </div>
+
+  <div class="sidebar-card">
+    <h3>归档</h3>
+    <ul class="archive-list">
+      <% var years = {}; site.posts.each(function(p){ years[p.date.year()] = (years[p.date.year()] || 0) + 1; }); %>
+      <% Object.keys(years).sort().reverse().slice(0, 6).forEach(function(y){ %>
+        <li><a href="<%- url_for(config.archive_dir + '/' + y) %>"><%= y %></a><span class="count"><%= years[y] %></span></li>
+      <% }); %>
+    </ul>
+  </div>
+
+  <div class="sidebar-card">
+    <h3>网站信息</h3>
+    <table class="site-info-table">
+      <tr><td>文章数目</td><td><%= site.posts.length %></td></tr>
+      <tr><td>本站访客数</td><td><span id="busuanzi_value_site_uv">-</span></td></tr>
+      <tr><td>本站总浏览量</td><td><span id="busuanzi_value_site_pv">-</span></td></tr>
+      <tr><td>最后更新时间</td><td><%= site.posts.length > 0 ? date(site.posts.sort('updated', -1).data[0].updated, 'YYYY-MM-DD') : '-' %></td></tr>
+    </table>
+  </div>
+</aside>

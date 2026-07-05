@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<%- partial('_partial/head') %>
+<body>
+  <div id="anime-bg"></div>
+
+  <header id="main-header">
+    <div class="header-left">火之高兴的博客</div>
+    <nav class="header-center">
+      <a href="<%- url_for('/') %>" class="<%= (page.path === '' || page.path === 'index.html') ? 'active' : '' %>">主页</a>
+      <a href="<%- url_for('/categories/articles') %>" class="<%= (page.path && page.path.indexOf('categories/articles') === 0) ? 'active' : '' %>">文章</a>
+      <a href="<%- url_for('/categories/blog') %>" class="<%= (page.path && page.path.indexOf('categories/blog') === 0) ? 'active' : '' %>">Blog</a>
+      <a href="<%- url_for('/archives') %>">更多</a>
+    </nav>
+    <div class="header-right">
+      <a class="icon-circle" href="https://github.com/gitfirehappy" target="_blank" title="GitHub"><i class="fa fa-github"></i></a>
+      <a class="icon-circle" href="<%- url_for('/about') %>" title="关于本人">
+        <img src="<%- url_for('/images/avatar.png') %>" alt="avatar" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fa fa-user\\'></i>'">
+      </a>
+    </div>
+  </header>
+
+  <%- body %>
+
+  <footer id="main-footer">&copy; <%= date(new Date(), 'YYYY') %> <%= config.title %> &mdash; Powered by Hexo</footer>
+  <%- partial('_partial/after-footer') %>
+</body>
+</html>

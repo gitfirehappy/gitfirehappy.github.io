@@ -1,0 +1,46 @@
+<!-- Hero: full viewport, just background -->
+<div id="hero"></div>
+
+<!-- Content section -->
+<div class="content-wrapper">
+  <div class="section-header">
+    <h2>✨ 精选内容</h2>
+    <p>最新文章与项目分享</p>
+  </div>
+
+  <main id="main-content">
+    <div class="card-grid">
+      <% page.posts.each(function(post){ %>
+        <a class="post-card" href="<%- url_for(post.path) %>">
+          <div class="card-cover">
+            <% if (post.cover) { %>
+              <img src="<%- url_for(post.cover) %>" alt="<%= post.title %>" loading="lazy" onerror="this.style.display='none'">
+            <% } else { %>
+              <span>📄</span>
+            <% } %>
+          </div>
+          <div class="card-body">
+            <div class="card-title"><%= post.title %></div>
+            <div class="card-meta">
+              <span><i class="fa fa-calendar"></i> <%= date(post.date, 'YYYY-MM-DD') %></span>
+              <% if (post.categories && post.categories.length) { %>
+                <span><i class="fa fa-folder"></i> <%= post.categories.first().name %></span>
+              <% } %>
+            </div>
+            <% if (post.excerpt) { %>
+              <div class="card-excerpt"><%= strip_html(post.excerpt).substring(0, 100) %></div>
+            <% } %>
+          </div>
+        </a>
+      <% }); %>
+    </div>
+
+    <% if (page.total > 1){ %>
+    <nav class="page-nav">
+      <%- paginator({ prev_text: '&laquo; 上一页', next_text: '下一页 &raquo;', escape: false }) %>
+    </nav>
+    <% } %>
+  </main>
+
+  <%- partial('_partial/sidebar') %>
+</div>

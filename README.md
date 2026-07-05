@@ -1,58 +1,64 @@
-# ChengFeiyang Blog
+# 火之高兴的博客
 
-Hexo personal blog for <https://gitfirehappy.github.io/>.
+基于 Hexo 的个人博客，二次元玻璃拟态主题。
 
-## Commands
+在线地址：<https://gitfirehappy.github.io/>
 
-```powershell
+## 快速开始
+
+```bash
 npm install
-npx hexo clean
-npx hexo generate
-npx hexo server
+npx hexo server     # 本地预览 http://localhost:4000
+npx hexo generate   # 生成静态文件到 public/
+npx hexo clean      # 清理缓存
 ```
 
-Open the local preview URL printed by `hexo server`.
+## 写文章
 
-## Writing
+### 新建文章
 
-The current `source/_posts/init.md` is a placeholder post so the first deploy has a visible page. Replace or delete it after writing a real first post.
-
-Create a post:
-
-```powershell
-npx hexo new post "Post Title"
+```bash
+npx hexo new post "文章标题"
 ```
 
-`post_asset_folder: true` is enabled. Hexo creates a same-name folder beside each post:
+这会在 `source/_posts/` 下生成：
 
-```text
-source/_posts/Post-Title.md
-source/_posts/Post-Title/
+```
+source/_posts/文章标题.md
+source/_posts/文章标题/       ← 该文章专属图片文件夹
 ```
 
-Put post images in that folder and reference them from Markdown:
+### Front-matter 模板
 
 ```markdown
-![image alt](image.png)
+---
+title: 文章标题
+date: 2026-07-05 20:00:00
+tags: [标签1, 标签2]
+categories: articles        ← articles 或 blog
+cover: /images/covers/xxx.jpg   ← 封面图（可选，不写则显示占位图标）
+---
 ```
 
-## Style Assets
+### 图片放哪里？
 
-The site background lives at `source/images/backgrounds/anime-night-city.png`. Replace that file to change the global background.
+项目已配置 `post_asset_folder: true`（文章和图片打包在一起）：
 
-## Deploy
+| 图片类型 | 存放位置 | 引用方式 |
+|---------|---------|---------|
+| 文章内嵌图片 | `source/_posts/文章标题/xxx.png` | `![alt](xxx.png)` |
+| 文章封面图 | `source/images/covers/xxx.jpg` | front-matter 中 `cover: /images/covers/xxx.jpg` |
+| 个人头像 | `source/images/avatar.png` | 直接替换该文件 |
+| 二次元背景 | `source/images/bg/bg-1.jpg`, `bg-2.jpg`, ... | 按数字命名，页面随机选取 |
 
-The site deploys with GitHub Actions from `main` to GitHub Pages.
+> **推荐用 MD + 同名文件夹的方式**：`hexo new` 自动创建，图片和文章不散落。
 
-Create or confirm the public repository `gitfirehappy/gitfirehappy.github.io`, then push:
+## 背景图
 
-```powershell
-git init
-git branch -M main
-git add .
-git commit -m "Initialize Hexo blog"
-git remote add origin https://github.com/gitfirehappy/gitfirehappy.github.io.git
-git push -u origin main
-```
+在 `source/images/bg/` 下放入图片，命名规则 `bg-1.jpg`、`bg-2.jpg`、`bg-3.jpg` ……
 
-In GitHub repository settings, set Pages source to GitHub Actions.
+页面每次加载随机选一张。建议分辨率 1920×1080 以上。
+
+## 部署
+
+通过 GitHub Actions 部署到 GitHub Pages，push 到 `main` 分支即可自动触发。

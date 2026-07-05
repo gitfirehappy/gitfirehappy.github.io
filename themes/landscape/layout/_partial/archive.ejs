@@ -1,0 +1,54 @@
+<div class="content-wrapper">
+  <div class="section-header">
+    <h2><%= is_archive() ? '📚 文章归档' : (page.category ? '📂 ' + page.category : '全部文章') %></h2>
+  </div>
+
+  <main id="main-content">
+    <div class="header-search" style="margin-bottom:20px;">
+      <input type="text" id="post-search" placeholder="🔍 搜索文章标题..." oninput="filterPosts()">
+    </div>
+
+    <div class="post-list" id="post-list">
+      <% page.posts.each(function(post){ %>
+        <a class="post-list-item" href="<%- url_for(post.path) %>" data-title="<%= post.title.toLowerCase() %>">
+          <div class="list-cover">
+            <% if (post.cover) { %>
+              <img src="<%- url_for(post.cover) %>" alt="<%= post.title %>" loading="lazy" onerror="this.style.display='none'">
+            <% } else { %>
+              <span>📄</span>
+            <% } %>
+          </div>
+          <div class="list-body">
+            <div class="list-title"><%= post.title %></div>
+            <% if (post.excerpt) { %>
+              <div class="list-excerpt"><%= strip_html(post.excerpt).substring(0, 120) %></div>
+            <% } %>
+            <div class="list-meta">
+              <span><i class="fa fa-calendar"></i> <%= date(post.date, 'YYYY-MM-DD') %></span>
+              <% if (post.categories && post.categories.length) { %>
+                <span><i class="fa fa-folder"></i> <%= post.categories.first().name %></span>
+              <% } %>
+            </div>
+          </div>
+        </a>
+      <% }); %>
+    </div>
+
+    <script>
+    function filterPosts() {
+      var q = document.getElementById('post-search').value.toLowerCase();
+      document.querySelectorAll('#post-list .post-list-item').forEach(function(el) {
+        el.style.display = q === '' || el.getAttribute('data-title').indexOf(q) !== -1 ? '' : 'none';
+      });
+    }
+    </script>
+
+    <% if (page.total > 1){ %>
+    <nav class="page-nav">
+      <%- paginator({ prev_text: '&laquo; 上一页', next_text: '下一页 &raquo;', escape: false }) %>
+    </nav>
+    <% } %>
+  </main>
+
+  <%- partial('_partial/sidebar') %>
+</div>
