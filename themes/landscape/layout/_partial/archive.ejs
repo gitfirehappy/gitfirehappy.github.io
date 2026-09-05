@@ -4,12 +4,15 @@
   </div>
 
   <main id="main-content">
+    <% if (page.posts && page.posts.length > 0) { %>
     <div class="header-search" style="margin-bottom:20px;">
       <input type="text" id="post-search" placeholder="🔍 搜索文章标题..." oninput="filterPosts()">
     </div>
+    <% } %>
 
     <div class="post-list" id="post-list">
-      <% page.posts.each(function(post){ %>
+      <% if (page.posts && page.posts.length > 0) { %>
+        <% page.posts.each(function(post){ %>
         <a class="post-list-item" href="<%- url_for(post.path) %>" data-title="<%= post.title.toLowerCase() %>">
           <div class="list-cover">
             <% if (post.cover) { %>
@@ -31,7 +34,10 @@
             </div>
           </div>
         </a>
-      <% }); %>
+        <% }); %>
+      <% } else { %>
+        <div class="empty-tip">暂无文章</div>
+      <% } %>
     </div>
 
     <script>
