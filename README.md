@@ -50,15 +50,15 @@ cover: /images/covers/xxx.jpg   ← 封面图（可选，不写则从默认封�
 | 文章封面图 | `source/images/covers/xxx.jpg` | front-matter 中 `cover: /images/covers/xxx.jpg` |
 | 默认封面池 | `source/images/covers/default/` | 文章未指定封面时，构建时按标题哈希随机选一张 |
 | 个人头像 | `source/images/avatar.png` | 直接替换该文件 |
-| 二次元背景 | `source/images/bg/bg-1.jpg`, `bg-2.jpg`, ... | 按数字命名，页面随机选取 |
+| 二次元背景 | `source/images/bg/bg-1.jpg` | 当前由 CSS 直接加载，不依赖 JavaScript |
 
 > **推荐用 MD + 同名文件夹的方式**：`hexo new` 自动创建，图片和文章不散落。
 
 ## 背景图
 
-在 `source/images/bg/` 下放入图片，命名规则 `bg-1.jpg`、`bg-2.jpg`、`bg-3.jpg` ……
+替换 `source/images/bg/bg-1.jpg` 即可更新背景。
 
-页面每次加载随机选一张。建议分辨率 1920×1080 以上。
+页面通过主题 CSS 直接加载这张图片，不再随机请求不存在的文件。建议分辨率 1920×1080 以上。
 
 ## 默认封面池
 

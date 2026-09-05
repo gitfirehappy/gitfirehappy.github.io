@@ -3,7 +3,7 @@ title: 二次元主题美化思路分享
 date: 2026-07-05 10:00:00
 tags: [Hexo, 主题, 美化]
 categories: blog
-cover: /images/covers/blog-1.jpg
+cover: /images/covers/default/default-cover.jpg
 ---
 
 ## 缘起
