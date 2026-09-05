@@ -1,5 +1,11 @@
 <!-- Hero: full viewport, just background -->
-<div id="hero"></div>
+<div id="hero">
+  <div class="scroll-hint">
+    <div class="scroll-circle">
+      <i class="fa fa-chevron-down"></i>
+    </div>
+  </div>
+</div>
 
 <!-- Content section -->
 <div class="content-wrapper">
@@ -16,7 +22,7 @@
             <% if (post.cover) { %>
               <img src="<%- url_for(post.cover) %>" alt="<%= post.title %>" loading="lazy" onerror="this.style.display='none'">
             <% } else { %>
-              <span>📄</span>
+              <img src="<%- url_for(partial('_partial/default_cover', {seed: post.title})) %>" alt="<%= post.title %>" loading="lazy" onerror="this.style.display='none'">
             <% } %>
           </div>
           <div class="card-body">

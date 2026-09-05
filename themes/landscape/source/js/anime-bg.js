@@ -1,28 +1,73 @@
 // Anime background randomizer — drop images in /images/bg/ named bg-1.jpg, bg-2.jpg, ...
 (function() {
   'use strict';
+
+  // === Background ===
   var bg = document.getElementById('anime-bg');
-  if (!bg) return;
+  if (bg) {
+    var maxTries = 20;
+    var idx = Math.floor(Math.random() * maxTries) + 1;
+    var tried = 0;
 
-  // Try to load random background from /images/bg/bg-N.jpg
-  var maxTries = 20;
-  var idx = Math.floor(Math.random() * maxTries) + 1;
-  var tried = 0;
-
-  function tryNext() {
-    if (tried >= maxTries) return; // all tried, keep gradient fallback
-    var url = '/images/bg/bg-' + idx + '.jpg';
-    var img = new Image();
-    img.onload = function() {
-      bg.style.backgroundImage = 'url(' + url + ')';
-    };
-    img.onerror = function() {
-      tried++;
-      idx = (idx % maxTries) + 1;
-      tryNext();
-    };
-    img.src = url;
+    function tryNext() {
+      if (tried >= maxTries) return;
+      var url = '/images/bg/bg-' + idx + '.jpg';
+      var img = new Image();
+      img.onload = function() { bg.style.backgroundImage = 'url(' + url + ')'; };
+      img.onerror = function() { tried++; idx = (idx % maxTries) + 1; tryNext(); };
+      img.src = url;
+    }
+    tryNext();
   }
 
-  tryNext();
+  // === Scroll hint: hero bottom chevron ===
+  var hint = document.querySelector('.scroll-hint');
+  if (hint) {
+    // Click → scroll to content
+    hint.addEventListener('click', function() {
+      var target = document.querySelector('.content-wrapper');
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+    // Hide when hero scrolled past
+    if (window.IntersectionObserver) {
+      var hero = document.getElementById('hero');
+      if (hero) {
+        new IntersectionObserver(function(entries) {
+          hint.style.opacity = entries[0].isIntersecting ? '1' : '0';
+          hint.style.pointerEvents = entries[0].isIntersecting ? 'auto' : 'none';
+        }, { threshold: 0.9 }).observe(hero);
+      }
+    }
+  }
+
+  // === Back to top ===
+  var backTop = document.getElementById('back-top');
+  if (backTop) {
+    var scrollHandler = function() {
+      var scrollY = window.scrollY || window.pageYOffset;
+      var docHeight = Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+      );
+      var needsScroll = docHeight > window.innerHeight + 60;
+      if (needsScroll && scrollY > window.innerHeight * 0.6) {
+        backTop.classList.add('show');
+      } else {
+        backTop.classList.remove('show');
+      }
+    };
+    // Throttled scroll listener
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() { scrollHandler(); ticking = false; });
+        ticking = true;
+      }
+    });
+    scrollHandler(); // initial check
+    backTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 })();

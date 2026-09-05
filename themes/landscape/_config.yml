@@ -1,4 +1,11 @@
 # ===============
+# Default Cover
+# ===============
+# 文章未指定封面时，从以下列表中随机选一张
+default_covers:
+  - /images/covers/default/default-cover.jpg
+
+# ===============
 # Header
 # ===============
 # Navigation menu

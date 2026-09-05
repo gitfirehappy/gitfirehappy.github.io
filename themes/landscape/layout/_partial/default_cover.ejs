@@ -1,0 +1,17 @@
+<%
+/**
+ * default_cover.ejs
+ * Usage: partial('_partial/default_cover', {seed: post.title || page.title || ''})
+ * Returns a default cover URL based on seed hash for deterministic selection
+ */
+var _covers = theme.default_covers;
+if (_covers && _covers.length > 0) {
+  var _hash = 0, _seedStr = typeof seed === 'string' ? seed : '';
+  for (var _i = 0; _i < _seedStr.length; _i++) {
+    _hash = ((_hash << 5) - _hash) + _seedStr.charCodeAt(_i);
+    _hash |= 0;
+  }
+  var _idx = Math.abs(_hash) % _covers.length;
+%><%= _covers[_idx] %><%
+}
+%>

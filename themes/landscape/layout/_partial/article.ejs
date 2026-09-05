@@ -1,8 +1,15 @@
 <div class="content-wrapper">
   <main id="main-content">
     <article class="single-post">
+      <div class="post-nav-top">
+        <a class="back-btn" href="javascript:history.back()" title="返回">
+          <i class="fa fa-arrow-left"></i>
+        </a>
+      </div>
       <% if (post.cover) { %>
         <img class="post-cover" src="<%- url_for(post.cover) %>" alt="<%= post.title %>" onerror="this.style.display='none'">
+      <% } else { %>
+        <img class="post-cover" src="<%- url_for(partial('_partial/default_cover', {seed: post.title})) %>" alt="<%= post.title %>" onerror="this.style.display='none'">
       <% } %>
       <h1 class="post-title"><%= post.title %></h1>
       <div class="post-meta">
