@@ -340,7 +340,7 @@ body {
 }
 .single-post .post-title { font-size: 1.6rem; color: var(--text-heading); margin-bottom: 12px; }
 .single-post .post-meta { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 24px; }
-.single-post .post-content { line-height: 1.8; font-size: 0.95rem; }
+.single-post .post-content { line-height: 1.8; font-size: 0.95rem; overflow-wrap: break-word; word-break: break-word; }
 .single-post .post-content h2, .single-post .post-content h3 { color: var(--text-heading); margin: 1.2em 0 0.6em; }
 .single-post .post-content p { margin: 0.8em 0; }
 .single-post .post-content img { max-width: 100%; border-radius: var(--radius-sm); }
@@ -351,6 +351,30 @@ body {
   background: rgba(240,245,248,0.8); padding: 16px; border-radius: var(--radius-sm);
   overflow-x: auto; border: 1px solid var(--glass-border);
 }
+/* Hexo highlight.js 代码块：figure.highlight > table > td.gutter/td.code > pre
+   table 不会收缩，需由外层 figure 承担横向滚动，避免撑破内容卡片（超格） */
+.single-post .post-content figure.highlight {
+  max-width: 100%;
+  overflow-x: auto;
+  background: rgba(240,245,248,0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  margin: 1em 0;
+}
+.single-post .post-content figure.highlight table { border-collapse: collapse; }
+.single-post .post-content figure.highlight td.gutter,
+.single-post .post-content figure.highlight td.code { vertical-align: top; }
+.single-post .post-content figure.highlight td.gutter pre,
+.single-post .post-content figure.highlight td.code pre {
+  background: transparent; border: none; overflow: visible; margin: 0;
+  border-radius: 0;
+}
+.single-post .post-content figure.highlight td.gutter pre { padding: 16px 8px 16px 16px; text-align: right; user-select: none; }
+.single-post .post-content figure.highlight td.code pre {
+  padding: 16px;
+  white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word;
+}
+.single-post .post-content figure.highlight td.code pre code { background: transparent; padding: 0; font-size: 0.9em; }
 .single-post .post-cover {
   width: 100%; max-height: 360px; object-fit: cover; border-radius: var(--radius-sm);
   margin-bottom: 20px;
